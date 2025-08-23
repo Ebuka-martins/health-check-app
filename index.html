@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Health Check-in</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <meta name="theme-color" content="#0000ff">
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png"> 
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Daily Health Check-in</h1>
+      <p class="subtitle">Track your wellness and improve your daily habits</p>
+    </div>
+
+    <div class="tracker-card">
+      <label for="mood">Mood: <span class="emoji-scale">😞 😐 😊</span></label>
+      <input type="range" min="1" max="5" value="3" id="mood" />
+    </div>
+
+    <div class="tracker-card">
+      <label for="energy">Energy Level: <span class="emoji-scale">🌙 ⚡ 🌞</span></label>
+      <input type="range" min="1" max="5" value="3" id="energy" />
+    </div>
+
+    <div class="buttons-container">
+      <div class="button-row">
+        <button id="submit">
+          <i class="fas fa-check-circle"></i> Submit Today
+        </button>
+        <button id="export">
+          <i class="fas fa-file-export"></i> Export Report
+        </button>
+      </div>
+      <div class="button-row">
+        <button id="remind">
+          <i class="fas fa-bell"></i> Set Reminder
+        </button>
+      </div>
+    </div>
+
+    <div id="chatbot">
+      <h3><i class="fas fa-robot"></i> Wellness Assistant</h3>
+      <p id="ai-response">How are you feeling today? I'm here to help with wellness tips and advice.</p>
+      <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Ask for tips..." />
+        <button id="ask-btn"><i class="fas fa-paper-plane"></i> Ask</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module" src="/js/firebase.js"></script>
+  <!-- OpenAI Service -->
+  <script type="module" src="/js/openai-service.js"></script>
+  <!-- Main App -->
+  <script src="/js/app.js"></script>
+</body>
+</html>
