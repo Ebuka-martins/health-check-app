@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Daily Health Check-in</title>
+  <title>AI Wellness Companion</title>
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
@@ -12,7 +12,7 @@
   <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
-  <meta name="theme-color" content="#0000ff">
+  <meta name="theme-color" content="#4361ee">
 
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
@@ -22,20 +22,60 @@
 <body>
   <div class="container">
     <div class="header">
-      <h1>Daily Health Check-in</h1>
-      <p class="subtitle">Track your wellness and improve your daily habits</p>
+      <h1><i class="fas fa-brain"></i> AI Wellness Companion</h1>
+      <p class="subtitle">Your intelligent partner for better health and habits</p>
+      <div class="daily-streak">
+        <span class="streak-count">🔥 7 Day Streak</span>
+        <span class="today-date" id="today-date"></span>
+      </div>
     </div>
 
+    <!-- Quick Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <i class="fas fa-smile"></i>
+        <span class="stat-value" id="avg-mood">3.5</span>
+        <span class="stat-label">Avg Mood</span>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-battery-half"></i>
+        <span class="stat-value" id="avg-energy">3.2</span>
+        <span class="stat-label">Avg Energy</span>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-fire"></i>
+        <span class="stat-value" id="checkin-streak">7</span>
+        <span class="stat-label">Day Streak</span>
+      </div>
+    </div>
+
+    <!-- Health Trackers -->
     <div class="tracker-card">
-      <label for="mood">Mood: <span class="emoji-scale">😞 😐 😊</span></label>
+      <label for="mood">How are you feeling today? <span class="emoji-scale">😞 😐 😊 🎉 🌟</span></label>
       <input type="range" min="1" max="5" value="3" id="mood" />
+      <div class="tracker-feedback" id="mood-feedback"></div>
     </div>
 
     <div class="tracker-card">
-      <label for="energy">Energy Level: <span class="emoji-scale">🌙 ⚡ 🌞</span></label>
+      <label for="energy">Energy Level: <span class="emoji-scale">🌙 💤 ⚡ 🌞 🚀</span></label>
       <input type="range" min="1" max="5" value="3" id="energy" />
+      <div class="tracker-feedback" id="energy-feedback"></div>
     </div>
 
+    <!-- Additional Trackers -->
+    <div class="tracker-card">
+      <label for="sleep">Sleep Quality (hours): <span class="emoji-scale">😴 🛌 💤 🌙 ⭐</span></label>
+      <input type="range" min="1" max="5" value="3" id="sleep" />
+      <div class="tracker-feedback" id="sleep-feedback"></div>
+    </div>
+
+    <div class="tracker-card">
+      <label for="exercise">Physical Activity: <span class="emoji-scale">🛋️ 🚶 🏃 🏋️ 🦸</span></label>
+      <input type="range" min="1" max="5" value="3" id="exercise" />
+      <div class="tracker-feedback" id="exercise-feedback"></div>
+    </div>
+
+    <!-- Enhanced Buttons -->
     <div class="buttons-container">
       <div class="button-row">
         <button id="submit">
@@ -46,19 +86,53 @@
         </button>
       </div>
       <div class="button-row">
+        <button id="trends">
+          <i class="fas fa-chart-line"></i> View Trends
+        </button>
+        <button id="insights">
+          <i class="fas fa-lightbulb"></i> Daily Insights
+        </button>
+      </div>
+      <div class="button-row">
         <button id="remind">
-          <i class="fas fa-bell"></i> Set Reminder
+          <i class="fas fa-bell"></i> Smart Reminder
+        </button>
+        <button id="community">
+          <i class="fas fa-users"></i> Community
+        </button>
+      </div>
+      <div class="button-row">
+        <button id="emergency" class="emergency-btn">
+          <i class="fas fa-life-ring"></i> Get Support
         </button>
       </div>
     </div>
 
+    <!-- AI Wellness Assistant -->
     <div id="chatbot">
-      <h3><i class="fas fa-robot"></i> Wellness Assistant</h3>
-      <p id="ai-response">How are you feeling today? I'm here to help with wellness tips and advice.</p>
+      <div class="chatbot-header">
+        <h3><i class="fas fa-robot pulse"></i> Wellness Assistant</h3>
+        <div class="assistant-status" id="assistant-status">🟢 Online</div>
+      </div>
+      <div class="ai-response-container">
+        <p id="ai-response">Hello! I'm your AI wellness assistant. How can I help you feel better today?</p>
+      </div>
+      <div class="quick-actions">
+        <button class="quick-btn" data-prompt="Give me a wellness tip">💡 Daily Tip</button>
+        <button class="quick-btn" data-prompt="Suggest a quick exercise">🏃 Quick Exercise</button>
+        <button class="quick-btn" data-prompt="Help me relax">😌 Relaxation</button>
+      </div>
       <div class="chat-input">
-        <input type="text" id="user-input" placeholder="Ask for tips..." />
+        <input type="text" id="user-input" placeholder="Ask for wellness advice..." />
         <button id="ask-btn"><i class="fas fa-paper-plane"></i> Ask</button>
       </div>
+    </div>
+
+    <!-- Daily Motivation -->
+    <div class="motivation-card">
+      <i class="fas fa-quote-left"></i>
+      <p id="daily-motivation">Your wellness journey is unique and worth celebrating every day!</p>
+      <i class="fas fa-quote-right"></i>
     </div>
   </div>
 
