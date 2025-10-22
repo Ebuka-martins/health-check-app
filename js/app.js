@@ -169,11 +169,62 @@ document.addEventListener("DOMContentLoaded", () => {
     return colors[value] || '#4361ee';
   }
 
+  // Typewriter Effect Function
+  function typewriterEffect(element, text, speed = 30) {
+    return new Promise((resolve) => {
+      element.innerHTML = '';
+      element.classList.add('typewriter-text');
+      
+      let i = 0;
+      const timer = setInterval(() => {
+        if (i < text.length) {
+          // Handle emojis and special characters
+          if (text[i] === '<') {
+            // Find the end of the HTML tag or emoji
+            const endIndex = text.indexOf('>', i);
+            if (endIndex !== -1) {
+              element.innerHTML = text.substring(0, endIndex + 1);
+              i = endIndex + 1;
+            } else {
+              element.innerHTML = text.substring(0, i + 1);
+              i++;
+            }
+          } else {
+            element.innerHTML = text.substring(0, i + 1);
+            i++;
+          }
+        } else {
+          clearInterval(timer);
+          element.classList.remove('typewriter-text');
+          resolve();
+        }
+      }, speed);
+    });
+  }
+
+  // Show typing indicator
+  function showTypingIndicator() {
+    aiResponse.innerHTML = `
+      <div class="typing-indicator">
+        <span>Thinking</span>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    `;
+  }
+
+  // Hide typing indicator
+  function hideTypingIndicator() {
+    // This will be handled by the typewriter effect
+  }
+
   async function handleChat() {
     const message = userInput.value.trim();
     if (!message) return;
 
-    aiResponse.textContent = "Thinking...";
+    // Show typing indicator
+    showTypingIndicator();
     userInput.value = "";
 
     try {
@@ -186,11 +237,13 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const data = await res.json();
-      aiResponse.textContent = data.reply;
-      aiResponse.parentElement.style.animation = 'typewriter 1s ease';
+      
+      // Use typewriter effect for the response
+      await typewriterEffect(aiResponse, data.reply, 20);
+      
     } catch (error) {
       console.error("Error:", error);
-      aiResponse.textContent = "Oops! Something went wrong. Please try again.";
+      await typewriterEffect(aiResponse, "Oops! Something went wrong. Please try again.", 20);
     }
   }
 
