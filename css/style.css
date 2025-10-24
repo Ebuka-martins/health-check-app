@@ -1081,7 +1081,7 @@ button:active {
 @media (prefers-color-scheme: dark) {
   :root {
     --card-bg: rgba(30, 30, 40, 0.95);
-    --dark: #0b0f13;
+    --dark: #e6e9ed;
   }
   
   body {

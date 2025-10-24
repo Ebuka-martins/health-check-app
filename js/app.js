@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add to conversation history
     conversationHistory.push({ role: 'user', content: message });
     if (conversationHistory.length > 10) {
-      conversationHistory = conversationHistory.slice(-10); // Keep last 10 messages
+      conversationHistory = conversationHistory.slice(-10);
     }
 
     showPremiumTypingIndicator();
@@ -306,7 +306,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const startTime = Date.now();
-      const res = await fetch("http://127.0.0.1:3000/api/chat", {
+      
+      // SMART API URL DETECTION - WORKS BOTH LOCALLY AND ON HEROKU
+      const apiUrl = window.location.hostname.includes('herokuapp.com') 
+        ? '/api/chat' 
+        : 'http://127.0.0.1:3000/api/chat';
+
+      const res = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -335,7 +341,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const responseContent = document.getElementById('response-content');
       await premiumTypewriterEffect(responseContent, data.reply, 20);
       
-      // Log successful interaction
       console.log('✅ Premium chat completed:', { responseTime, messageLength: message.length });
 
     } catch (error) {
@@ -344,12 +349,15 @@ document.addEventListener("DOMContentLoaded", () => {
       aiResponse.innerHTML = `
         <div class="ai-response-premium" style="border-left-color: #e63946;">
           <div class="response-header">
-            <div class="response-avatar" style="background: linear-gradient(135deg, #e63946, #d00000);">!</div>
+            <div class="response-avatar" style="background: #4cc9f0 !important;">!</div>
             <strong>System Notice</strong>
           </div>
           <div class="response-content">
             <p>I apologize for the interruption. There seems to be a temporary connection issue.</p>
             <p><strong>Please try again in a moment.</strong> Your wellness journey is important to me.</p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+              Debug: ${window.location.hostname.includes('herokuapp.com') ? 'Heroku' : 'Local'} mode
+            </p>
           </div>
         </div>
       `;
@@ -888,7 +896,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const prompt = `I just completed my daily wellness check-in with these metrics: Mood ${entry.mood}/5, Energy ${entry.energy}/5, Sleep ${entry.sleep}/5, Exercise ${entry.exercise}/5. Based on this specific combination, provide one concise, actionable insight or suggestion for today. Focus on practical implementation.`;
     
     try {
-      const res = await fetch("http://127.0.0.1:3000/api/chat", {
+      const apiUrl = window.location.hostname.includes('herokuapp.com') 
+        ? '/api/chat' 
+        : 'http://127.0.0.1:3000/api/chat';
+
+      const res = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
