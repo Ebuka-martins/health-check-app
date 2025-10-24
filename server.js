@@ -16,17 +16,17 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
-console.log("🚀 Starting Martins AI Wellness App...");
+console.log("🚀 Health Check App Starting...");
 
 app.get("/api/ping", (req, res) => {
-  res.json({ status: "ok", message: "Server is running" });
+  res.json({ status: "ok", message: "Server running" });
 });
 
 app.post("/api/chat", async (req, res) => {
   const { message } = req.body;
   
   if (!process.env.GROQ_API_KEY) {
-    return res.json({ reply: "AI service is currently unavailable. Please try again later." });
+    return res.json({ reply: "AI service is being configured. Please try again later." });
   }
 
   try {
@@ -41,7 +41,7 @@ app.post("/api/chat", async (req, res) => {
         messages: [
           { 
             role: "system", 
-            content: "You are a helpful wellness assistant. Provide short, supportive responses." 
+            content: "You are a helpful wellness assistant. Provide supportive health advice." 
           },
           { role: "user", content: message },
         ],
@@ -50,7 +50,7 @@ app.post("/api/chat", async (req, res) => {
     });
 
     const data = await response.json();
-    const aiReply = data.choices?.[0]?.message?.content || "I'm here to help!";
+    const aiReply = data.choices?.[0]?.message?.content || "Hello! How can I help with your wellness today?";
     res.json({ reply: aiReply });
 
   } catch (error) {
