@@ -3,29 +3,14 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
-import path from "path";
-import { fileURLToPath } from 'url';
-
-// Fix for ES modules __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const app = express();
-
-// Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
-// Serve static files (HTML, CSS, JS, images)
-app.use(express.static(__dirname));
-app.use('/css', express.static(path.join(__dirname, 'css')));
-app.use('/js', express.static(path.join(__dirname, 'js')));
-app.use('/icons', express.static(path.join(__dirname, 'icons')));
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
-
-console.log("🚀 Martins AI Wellness Assistant Initializing...");
-console.log("🔑 Groq API Key:", process.env.GROQ_API_KEY ? "✅ Loaded Successfully" : "❌ Missing");
+console.log("🚀 Wellness AI Assistant Initializing...");
+console.log("🔑 Groq API Key:", process.env.GROQ_API_KEY ? "✅ Loaded Successfully" : "❌ Missing - Get from: https://console.groq.com");
 
 if (!process.env.GROQ_API_KEY) {
   console.error("❌ CRITICAL: GROQ_API_KEY is required for AI functionality");
@@ -201,20 +186,12 @@ app.get("/api/wellness-tips", (req, res) => {
   });
 });
 
-// Serve the main HTML file for all other routes (SPA support)
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-// Get port from environment variable (Heroku sets this)
 const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, () => {
   console.log(`\n✨ ============================================== ✨`);
-  console.log(`   🌿 MARTINS AI WELLNESS SERVER ACTIVE 🌿`);
+  console.log(`   🌿 Martins AI WELLNESS SERVER ACTIVE 🌿`);
   console.log(`   📍 Port: ${PORT}`);
-  console.log(`   🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`   🔗 Health: /api/ping`);
+  console.log(`   🔗 Health: http://localhost:${PORT}/api/ping`);
   console.log(`   🕒 Started: ${new Date().toLocaleString()}`);
   console.log(`✨ ============================================== ✨\n`);
 });
